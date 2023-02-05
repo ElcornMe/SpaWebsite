@@ -1,12 +1,23 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import mainPage from './routes/index-route';
+import cors from 'cors';
 
 const app = express();
-const port = 5000;
 
-app.get('/', (req, res) => {
-  res.send('SPA');
-});
+const allowedOrigins = ['http://localhost:3000'];
 
-app.listen(port, () => {
-  return console.log(`server is listening on ${port}`);
-});
+const options = {
+  origin: allowedOrigins
+};
+
+app.use(cors(options));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use("/", mainPage)
+
+
+module.exports = app;
