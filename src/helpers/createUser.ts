@@ -4,14 +4,16 @@ type User = {
   id: number,
   name: string,
   email: string,
-  homePage?: string,
+  homePage?: string | null,
   comment: string
 };
 
-function createUsers(user: User) {
+async function createUsers(user: User) {
 let {name, email, homePage, comment} = user;
 
- model.User.create({name, email, homePage})
+if(homePage === '') homePage = null;
+
+ await model.User.create({name, email, homePage})
   .then((user: User) => {
     console.log(name + " is new user")
     console.log(name + ' created now')
