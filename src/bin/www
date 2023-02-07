@@ -1,0 +1,32 @@
+const sequelize = require('../database/db');
+const express = require('express');
+const app = require('../index');
+
+const port = 5000;
+
+app.set('port', port);
+
+const start = async () => {
+  try{
+    await sequelize.authenticate();
+    await sequelize.sync();
+    app.listen(port, () => {
+      return console.log(`server is listening on ${port}`);
+    });
+    app.on('listening', onListening)
+  }catch(e) {
+      console.log(e.name);
+      console.log(e.message);
+  }
+}
+
+
+function onListening() {
+  const addr = app.address();
+  const bind = typeof addr === 'string'
+    ? `pipe ${addr}`
+    : `port ${addr.port}`;
+  debug(`Listening on ${bind}`);
+}
+
+start()

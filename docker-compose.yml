@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  server:
+    container_name: server
+    image: postgres:9.6.8-alpine
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /node_modules
+    ports:
+      - 5000:5000
+    command: npx nodemon
+    depends_on:
+      - postgres
+    restart: always
+  postgres:
+    container_name: postgres
+    image: postgres:9.6.8-alpine
+    environment: 
+      PG_DATA: /var/lib/postgresql/data
+    ports: 
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
+    restart: always
+
+volumes:
+  database:
