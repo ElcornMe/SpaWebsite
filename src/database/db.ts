@@ -5,9 +5,9 @@ let sequelize = new Sequelize(
   "postgres",
   "16121976",
   {
-    dialect: 'postgres',
+    dialect: "postgres",
     dialectOptions: {},
-    host: "localhost",
+    host: "postgres",
     port: 5432,
   },
 );
